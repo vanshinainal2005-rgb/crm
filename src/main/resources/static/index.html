@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise CRM — Customer Relationship & Operations Management</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Custom Enterprise CRM CSS -->
+    <link href="/css/crm.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside id="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-icon">
+                <i class="bi bi-clouds-fill"></i>
+            </div>
+            <div class="brand-text">
+                <h5>Enterprise CRM</h5>
+                <small>Oracle 26ai Cloud</small>
+            </div>
+        </div>
+
+        <div class="sidebar-nav">
+            <div class="nav-section-title">Core Operations</div>
+            <div class="nav-item">
+                <a href="#" class="nav-link-custom active" data-view="dashboard">
+                    <i class="bi bi-speedometer2"></i> Executive Dashboard
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link-custom" data-view="customers">
+                    <i class="bi bi-people-fill"></i> Customers &amp; Accounts
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link-custom" data-view="leads">
+                    <i class="bi bi-person-plus-fill"></i> Sales Leads
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link-custom" data-view="pipeline">
+                    <i class="bi bi-kanban-fill"></i> Deals Pipeline (Kanban)
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link-custom" data-view="tasks">
+                    <i class="bi bi-check2-square"></i> Tasks &amp; Follow-ups
+                </a>
+            </div>
+
+            <div class="nav-section-title">Commerce &amp; Inventory</div>
+            <div class="nav-item">
+                <a href="#" class="nav-link-custom" data-view="products">
+                    <i class="bi bi-box-seam-fill"></i> Products &amp; Inventory
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link-custom" data-view="orders">
+                    <i class="bi bi-cart-check-fill"></i> Sales Orders
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link-custom" data-view="invoices">
+                    <i class="bi bi-receipt"></i> Invoices &amp; Billing
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link-custom" data-view="payments">
+                    <i class="bi bi-credit-card-2-front-fill"></i> Payments Ledger
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link-custom" data-view="commissions">
+                    <i class="bi bi-award-fill"></i> Sales Commissions
+                </a>
+            </div>
+
+            <div class="nav-section-title">Operations &amp; Governance</div>
+            <div class="nav-item">
+                <a href="#" class="nav-link-custom" data-view="queues">
+                    <i class="bi bi-inboxes-fill"></i> Department Queues
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link-custom" data-view="reports">
+                    <i class="bi bi-bar-chart-line-fill"></i> Analytics &amp; Reports
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link-custom" data-view="audit">
+                    <i class="bi bi-shield-lock-fill"></i> System Audit Trail
+                </a>
+            </div>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-success rounded-circle p-1"></span>
+                <small class="text-secondary">Oracle 26ai: Connected</small>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN APP CONTENT WRAPPER -->
+    <div id="main-wrapper">
+        
+        <!-- TOP NAVIGATION BAR -->
+        <header class="top-navbar">
+            <div class="global-search-box">
+                <i class="bi bi-search"></i>
+                <input type="text" id="globalSearchInput" placeholder="Search customers, deals, invoices... (Press Enter)">
+            </div>
+
+            <div class="top-nav-actions">
+                <!-- Live Demo Role Switcher Dropdown -->
+                <div class="dropdown">
+                    <div class="role-badge-pill" data-bs-toggle="dropdown" aria-expanded="false" title="Click to test system as any of the 9 roles">
+                        <i class="bi bi-shield-check text-primary"></i>
+                        <span id="navRolePill">Super Administrator</span>
+                        <i class="bi bi-chevron-down small"></i>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0" style="min-width: 280px; font-size: 0.825rem;">
+                        <li class="dropdown-header fw-bold text-uppercase text-secondary">Switch Demo User Role</li>
+                        <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="switchDemoRole('superadmin')"><strong>Super Admin</strong> (Alexander Wright)</a></li>
+                        <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="switchDemoRole('admin')"><strong>Administrator</strong> (Samantha Hayes)</a></li>
+                        <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="switchDemoRole('salesmgr')"><strong>Sales Manager</strong> (Marcus Vance)</a></li>
+                        <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="switchDemoRole('salesagent')"><strong>Sales Representative</strong> (Sarah Jenkins)</a></li>
+                        <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="switchDemoRole('support')"><strong>Customer Support</strong> (David Chen)</a></li>
+                        <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="switchDemoRole('inventory')"><strong>Inventory Manager</strong> (Elena Rostova)</a></li>
+                        <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="switchDemoRole('finance')"><strong>Finance Team</strong> (Robert Sterling)</a></li>
+                        <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="switchDemoRole('shipping')"><strong>Shipping Team</strong> (Liam O'Connor)</a></li>
+                        <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="switchDemoRole('misanalyst')"><strong>MIS Analyst</strong> (Priya Sharma)</a></li>
+                    </ul>
+                </div>
+
+                <!-- Notifications -->
+                <div class="dropdown">
+                    <button class="btn btn-light position-relative p-2 rounded-circle" data-bs-toggle="dropdown">
+                        <i class="bi bi-bell text-secondary fs-5"></i>
+                        <span id="notifBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">0</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 p-3" style="width: 320px;">
+                        <li class="fw-bold mb-2 pb-2 border-bottom d-flex justify-content-between">
+                            <span>Notifications</span>
+                            <small class="text-primary" style="cursor: pointer;">Mark all read</small>
+                        </li>
+                        <li class="text-muted small py-2">Lead Vanguard Aerospace assigned to sales queue</li>
+                        <li class="text-muted small py-2">Commission approved for Zenith BioPharma deal</li>
+                        <li class="text-muted small py-2">Invoice #INV-2026-00001 settled via Federal Wire</li>
+                    </ul>
+                </div>
+
+                <!-- User Profile -->
+                <div class="d-flex align-items-center gap-2 border-start ps-3">
+                    <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold" style="width: 36px; height: 36px;">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <div class="d-none d-md-block text-start" style="line-height: 1.2;">
+                        <div class="fw-semibold text-dark" id="navUserName">Alexander Wright</div>
+                        <small class="text-secondary" id="navUserDept">Executive Dept</small>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT BODY WITH DYNAMIC VIEWS -->
+        <main class="content-body">
+
+            <!-- ============================================================== -->
+            <!-- VIEW 1: DASHBOARD -->
+            <!-- ============================================================== -->
+            <div id="view-dashboard" class="view-container">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <div>
+                        <h4 class="fw-bold mb-1">Executive Operations Dashboard</h4>
+                        <p class="text-secondary small mb-0">Live enterprise telemetry powered by Oracle PL/SQL package aggregations.</p>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-secondary" onclick="loadDashboard()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+                        <button class="btn btn-sm btn-primary" onclick="openCreateOrderModal()"><i class="bi bi-plus-lg"></i> Quick Order</button>
+                    </div>
+                </div>
+
+                <!-- KPI Metric Cards Grid -->
+                <div class="row g-3 mb-4">
+                    <div class="col-xl-3 col-md-6">
+                        <div class="metric-card">
+                            <div>
+                                <div class="metric-header">
+                                    <span class="metric-title">Active Customers</span>
+                                    <div class="metric-icon-wrap bg-primary-subtle text-primary"><i class="bi bi-building-check"></i></div>
+                                </div>
+                                <div class="metric-val" id="kpiTotalCustomers">0</div>
+                            </div>
+                            <div class="metric-footer text-success"><i class="bi bi-arrow-up-right"></i> <span class="fw-semibold">+12%</span> vs last month</div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="metric-card">
+                            <div>
+                                <div class="metric-header">
+                                    <span class="metric-title">New Inbound Leads</span>
+                                    <div class="metric-icon-wrap bg-info-subtle text-info"><i class="bi bi-funnel"></i></div>
+                                </div>
+                                <div class="metric-val" id="kpiNewLeads">0</div>
+                            </div>
+                            <div class="metric-footer text-primary"><i class="bi bi-clock-history"></i> In qualification queue</div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="metric-card">
+                            <div>
+                                <div class="metric-header">
+                                    <span class="metric-title">Active Pipeline Value</span>
+                                    <div class="metric-icon-wrap bg-warning-subtle text-warning"><i class="bi bi-graph-up-arrow"></i></div>
+                                </div>
+                                <div class="metric-val" id="kpiPipelineValue">$0.00</div>
+                            </div>
+                            <div class="metric-footer text-secondary"><span id="kpiActiveOpps">0</span> qualified deals</div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="metric-card">
+                            <div>
+                                <div class="metric-header">
+                                    <span class="metric-title">Closed-Won Revenue</span>
+                                    <div class="metric-icon-wrap bg-success-subtle text-success"><i class="bi bi-currency-dollar"></i></div>
+                                </div>
+                                <div class="metric-val text-success" id="kpiWonRevenue">$0.00</div>
+                            </div>
+                            <div class="metric-footer text-success"><i class="bi bi-check-circle-fill"></i> Settled &amp; realized</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Secondary Row: Receivables & Pending Tasks -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <div class="metric-card border-warning">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="metric-title text-warning">Outstanding Receivables</span>
+                                    <div class="metric-val text-dark" id="kpiReceivables">$0.00</div>
+                                </div>
+                                <i class="bi bi-receipt-cutoff fs-2 text-warning"></i>
+                            </div>
+                            <div class="metric-footer text-muted">Awaiting customer payment reconciliation</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="metric-card border-primary">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="metric-title text-primary">Pending CRM Tasks</span>
+                                    <div class="metric-val text-dark" id="kpiPendingTasks">0</div>
+                                </div>
+                                <i class="bi bi-list-task fs-2 text-primary"></i>
+                            </div>
+                            <div class="metric-footer text-muted">Follow-ups, meetings, and urgent reviews due</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Charts & Operations Section -->
+                <div class="row g-3">
+                    <div class="col-lg-4">
+                        <div class="crm-card h-100">
+                            <div class="crm-card-header">
+                                <h6 class="crm-card-title">Deals by Stage Distribution</h6>
+                            </div>
+                            <div class="p-3 d-flex flex-column align-items-center justify-content-center" style="height: 320px;">
+                                <canvas id="pipelineStageChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="crm-card h-100">
+                            <div class="crm-card-header">
+                                <h6 class="crm-card-title">Department Work Queues</h6>
+                            </div>
+                            <div class="p-3" id="dashboardQueueStatus">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="crm-card h-100">
+                            <div class="crm-card-header">
+                                <h6 class="crm-card-title">Urgent Tasks &amp; Actions</h6>
+                            </div>
+                            <div class="p-3" id="urgentTasksList">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Timeline Row -->
+                <div class="crm-card mt-3">
+                    <div class="crm-card-header">
+                        <h6 class="crm-card-title">Recent Customer Activity Stream</h6>
+                    </div>
+                    <div class="p-3" id="recentActivityList">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- VIEW 2: CUSTOMERS -->
+            <!-- ============================================================== -->
+            <div id="view-customers" class="view-container d-none">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h4 class="fw-bold mb-1">Customers &amp; Accounts</h4>
+                        <p class="text-secondary small mb-0">Enterprise customer database with duplicate detection and 360-degree account drawer.</p>
+                    </div>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newCustomerModal">
+                        <i class="bi bi-person-plus-fill"></i> New Customer
+                    </button>
+                </div>
+
+                <!-- Filters -->
+                <div class="crm-card p-3 mb-3">
+                    <div class="row g-2">
+                        <div class="col-md-5">
+                            <input type="text" id="customerSearchInput" class="form-control form-control-sm" placeholder="Search by customer name, email, or company..." oninput="loadCustomers()">
+                        </div>
+                        <div class="col-md-3">
+                            <select id="customerCategoryFilter" class="form-select form-select-sm" onchange="loadCustomers()">
+                                <option value="ALL">All Categories</option>
+                                <option value="ENTERPRISE">Enterprise</option>
+                                <option value="VIP">VIP</option>
+                                <option value="STANDARD">Standard</option>
+                                <option value="SMB">SMB</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select id="customerStatusFilter" class="form-select form-select-sm" onchange="loadCustomers()">
+                                <option value="ALL">All Statuses</option>
+                                <option value="ACTIVE">Active</option>
+                                <option value="INACTIVE">Inactive</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-sm btn-outline-secondary w-100" onclick="loadCustomers()"><i class="bi bi-filter"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customer Table -->
+                <div class="crm-card">
+                    <div class="table-responsive">
+                        <table class="table table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Customer / Company</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Category</th>
+                                    <th>Assigned Rep</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customersTableBody">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- VIEW 3: SALES LEADS -->
+            <!-- ============================================================== -->
+            <div id="view-leads" class="view-container d-none">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h4 class="fw-bold mb-1">Sales Leads Management</h4>
+                        <p class="text-secondary small mb-0">Track inbound inquiries, qualify prospects, and convert leads via PL/SQL.</p>
+                    </div>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newLeadModal">
+                        <i class="bi bi-plus-lg"></i> Add New Lead
+                    </button>
+                </div>
+
+                <div class="crm-card p-3 mb-3">
+                    <div class="row g-2">
+                        <div class="col-md-6">
+                            <input type="text" id="leadSearchInput" class="form-control form-control-sm" placeholder="Search leads by name, company, or email..." oninput="loadLeads()">
+                        </div>
+                        <div class="col-md-4">
+                            <select id="leadStatusFilter" class="form-select form-select-sm" onchange="loadLeads()">
+                                <option value="ALL">All Statuses</option>
+                                <option value="NEW">New</option>
+                                <option value="CONTACTED">Contacted</option>
+                                <option value="QUALIFIED">Qualified</option>
+                                <option value="CONVERTED">Converted</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-sm btn-outline-secondary w-100" onclick="loadLeads()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="crm-card">
+                    <div class="table-responsive">
+                        <table class="table table-custom">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Lead / Company</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Source</th>
+                                    <th>Status</th>
+                                    <th>Budget</th>
+                                    <th class="text-end">Convert Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leadsTableBody">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- VIEW 4: DEALS PIPELINE (KANBAN BOARD) -->
+            <!-- ============================================================== -->
+            <div id="view-pipeline" class="view-container d-none">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h4 class="fw-bold mb-1">Visual Sales Pipeline (Kanban)</h4>
+                        <p class="text-secondary small mb-0">Drag and drop opportunities across stages to update stages and trigger audit trails.</p>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="border rounded px-3 py-1 bg-white">
+                            <small class="text-muted d-block">Grand Total</small>
+                            <span class="fw-bold text-dark" id="pipelineTotalVal">$0.00</span>
+                        </div>
+                        <div class="border rounded px-3 py-1 bg-white">
+                            <small class="text-muted d-block">Weighted Forecast</small>
+                            <span class="fw-bold text-primary" id="pipelineWeightedVal">$0.00</span>
+                        </div>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="loadKanbanPipeline()"><i class="bi bi-arrow-clockwise"></i></button>
+                    </div>
+                </div>
+
+                <!-- Kanban Columns Container -->
+                <div class="kanban-board">
+                    <!-- Column: NEW_LEAD -->
+                    <div class="kanban-col">
+                        <div class="kanban-col-header">
+                            <span class="kanban-col-title">New Lead <span class="kanban-col-count" id="kanban-count-NEW_LEAD">0</span></span>
+                            <small class="text-muted" id="kanban-val-NEW_LEAD">$0</small>
+                        </div>
+                        <div class="kanban-cards-container" id="kanban-cards-NEW_LEAD"></div>
+                    </div>
+
+                    <!-- Column: QUALIFIED -->
+                    <div class="kanban-col">
+                        <div class="kanban-col-header">
+                            <span class="kanban-col-title">Qualified <span class="kanban-col-count" id="kanban-count-QUALIFIED">0</span></span>
+                            <small class="text-muted" id="kanban-val-QUALIFIED">$0</small>
+                        </div>
+                        <div class="kanban-cards-container" id="kanban-cards-QUALIFIED"></div>
+                    </div>
+
+                    <!-- Column: CONTACTED -->
+                    <div class="kanban-col">
+                        <div class="kanban-col-header">
+                            <span class="kanban-col-title">Contacted <span class="kanban-col-count" id="kanban-count-CONTACTED">0</span></span>
+                            <small class="text-muted" id="kanban-val-CONTACTED">$0</small>
+                        </div>
+                        <div class="kanban-cards-container" id="kanban-cards-CONTACTED"></div>
+                    </div>
+
+                    <!-- Column: PROPOSAL -->
+                    <div class="kanban-col">
+                        <div class="kanban-col-header">
+                            <span class="kanban-col-title">Proposal <span class="kanban-col-count" id="kanban-count-PROPOSAL">0</span></span>
+                            <small class="text-muted" id="kanban-val-PROPOSAL">$0</small>
+                        </div>
+                        <div class="kanban-cards-container" id="kanban-cards-PROPOSAL"></div>
+                    </div>
+
+                    <!-- Column: NEGOTIATION -->
+                    <div class="kanban-col">
+                        <div class="kanban-col-header">
+                            <span class="kanban-col-title">Negotiation <span class="kanban-col-count" id="kanban-count-NEGOTIATION">0</span></span>
+                            <small class="text-muted" id="kanban-val-NEGOTIATION">$0</small>
+                        </div>
+                        <div class="kanban-cards-container" id="kanban-cards-NEGOTIATION"></div>
+                    </div>
+
+                    <!-- Column: WON -->
+                    <div class="kanban-col" style="border-top: 3px solid #10b981;">
+                        <div class="kanban-col-header">
+                            <span class="kanban-col-title text-success">Won <span class="kanban-col-count bg-success text-white" id="kanban-count-WON">0</span></span>
+                            <small class="text-success fw-bold" id="kanban-val-WON">$0</small>
+                        </div>
+                        <div class="kanban-cards-container" id="kanban-cards-WON"></div>
+                    </div>
+
+                    <!-- Column: LOST -->
+                    <div class="kanban-col" style="border-top: 3px solid #ef4444;">
+                        <div class="kanban-col-header">
+                            <span class="kanban-col-title text-danger">Lost <span class="kanban-col-count bg-danger text-white" id="kanban-count-LOST">0</span></span>
+                            <small class="text-danger fw-bold" id="kanban-val-LOST">$0</small>
+                        </div>
+                        <div class="kanban-cards-container" id="kanban-cards-LOST"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- VIEW 5: TASKS & FOLLOW-UPS -->
+            <!-- ============================================================== -->
+            <div id="view-tasks" class="view-container d-none">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h4 class="fw-bold mb-1">Tasks &amp; Follow-up Actions</h4>
+                        <p class="text-secondary small mb-0">Prioritized customer tasks, follow-up deadlines, and completion tracking.</p>
+                    </div>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newTaskModal">
+                        <i class="bi bi-plus-lg"></i> Create Task
+                    </button>
+                </div>
+
+                <div class="crm-card p-3 mb-3">
+                    <div class="row g-2">
+                        <div class="col-md-4">
+                            <select id="taskStatusFilter" class="form-select form-select-sm" onchange="loadTasks()">
+                                <option value="ALL">All Statuses</option>
+                                <option value="PENDING" selected>Pending</option>
+                                <option value="IN_PROGRESS">In Progress</option>
+                                <option value="COMPLETED">Completed</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <select id="taskPriorityFilter" class="form-select form-select-sm" onchange="loadTasks()">
+                                <option value="ALL">All Priorities</option>
+                                <option value="URGENT">Urgent</option>
+                                <option value="HIGH">High</option>
+                                <option value="MEDIUM">Medium</option>
+                                <option value="LOW">Low</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-sm btn-outline-secondary w-100" onclick="loadTasks()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="crm-card">
+                    <div class="table-responsive">
+                        <table class="table table-custom">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title &amp; Notes</th>
+                                    <th>Customer Linked</th>
+                                    <th>Priority</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tasksTableBody">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- VIEW 6: PRODUCTS & INVENTORY -->
+            <!-- ============================================================== -->
+            <div id="view-products" class="view-container d-none">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h4 class="fw-bold mb-1">Product Catalog &amp; Warehouse Inventory</h4>
+                        <p class="text-secondary small mb-0">Real-time inventory levels, price boundary enforcement, and stock audit adjustments.</p>
+                    </div>
+                    <button class="btn btn-sm btn-outline-secondary" onclick="loadProductsAndInventory()"><i class="bi bi-arrow-clockwise"></i> Refresh Stock</button>
+                </div>
+
+                <div class="crm-card">
+                    <div class="crm-card-header">
+                        <h6 class="crm-card-title">Live Product Inventory</h6>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-custom">
+                            <thead>
+                                <tr>
+                                    <th>SKU</th>
+                                    <th>Product Name / Category</th>
+                                    <th>Current Price</th>
+                                    <th>Available Stock</th>
+                                    <th>Reserved Stock</th>
+                                    <th>Status</th>
+                                    <th>Warehouse</th>
+                                    <th class="text-end">Inventory Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTableBody">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Stock Movement Audit Log -->
+                <div class="crm-card mt-3">
+                    <div class="crm-card-header">
+                        <h6 class="crm-card-title">Recent Warehouse Movement Audit Trail</h6>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Product</th>
+                                    <th>Type</th>
+                                    <th>Quantity</th>
+                                    <th>Reason</th>
+                                    <th>Performed By</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventoryMovementsTableBody">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- VIEW 7: ORDERS -->
+            <!-- ============================================================== -->
+            <div id="view-orders" class="view-container d-none">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h4 class="fw-bold mb-1">Sales Orders Management</h4>
+                        <p class="text-secondary small mb-0">Order-to-invoice pipeline with atomic inventory reservations and invoice generation.</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openCreateOrderModal()">
+                        <i class="bi bi-plus-lg"></i> Create Order
+                    </button>
+                </div>
+
+                <div class="crm-card">
+                    <div class="table-responsive">
+                        <table class="table table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Order #</th>
+                                    <th>Date</th>
+                                    <th>Customer</th>
+                                    <th>Sales Rep</th>
+                                    <th>Items</th>
+                                    <th>Total Amount</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Order Workflow</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTableBody">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- VIEW 8: INVOICES & BILLING -->
+            <!-- ============================================================== -->
+            <div id="view-invoices" class="view-container d-none">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h4 class="fw-bold mb-1">Invoices &amp; Accounts Receivable</h4>
+                        <p class="text-secondary small mb-0">Detailed tax breakdown, receivables balance tracking, and printable PDF previews.</p>
+                    </div>
+                    <button class="btn btn-sm btn-outline-secondary" onclick="loadInvoices()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+                </div>
+
+                <div class="crm-card">
+                    <div class="table-responsive">
+                        <table class="table table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Invoice #</th>
+                                    <th>Customer / Order</th>
+                                    <th>Issue Date</th>
+                                    <th>Due Date</th>
+                                    <th>Total Billed</th>
+                                    <th>Paid Amount</th>
+                                    <th>Outstanding Balance</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="invoicesTableBody">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- VIEW 9: PAYMENTS LEDGER -->
+            <!-- ============================================================== -->
+            <div id="view-payments" class="view-container d-none">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h4 class="fw-bold mb-1">Payments &amp; Collections Ledger</h4>
+                        <p class="text-secondary small mb-0">Audited payment receipts with idempotency keys and automatic commission triggers.</p>
+                    </div>
+                    <button class="btn btn-sm btn-outline-secondary" onclick="loadPayments()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+                </div>
+
+                <div class="crm-card">
+                    <div class="table-responsive">
+                        <table class="table table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Payment Ref</th>
+                                    <th>Date</th>
+                                    <th>Invoice #</th>
+                                    <th>Customer</th>
+                                    <th>Method</th>
+                                    <th>Amount Paid</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="paymentsTableBody">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- VIEW 10: COMMISSIONS -->
+            <!-- ============================================================== -->
+            <div id="view-commissions" class="view-container d-none">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h4 class="fw-bold mb-1">Sales Commission &amp; Incentive Management</h4>
+                        <p class="text-secondary small mb-0">Configurable tiered commission rates and manager approval workflow.</p>
+                    </div>
+                    <button class="btn btn-sm btn-outline-secondary" onclick="loadCommissions()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-5">
+                        <div class="crm-card">
+                            <div class="crm-card-header">
+                                <h6 class="crm-card-title">Tiered Incentive Rules</h6>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-custom">
+                                    <thead>
+                                        <tr>
+                                            <th>Rule Name</th>
+                                            <th>Min Sales</th>
+                                            <th>Max Sales</th>
+                                            <th>Rate</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="commissionRulesTableBody">
+                                        <!-- Dynamic rules -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-7">
+                        <div class="crm-card">
+                            <div class="crm-card-header">
+                                <h6 class="crm-card-title">Commission Payout Records</h6>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-custom">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Sales Representative</th>
+                                            <th>Order</th>
+                                            <th>Sales Amount</th>
+                                            <th>Rate</th>
+                                            <th>Commission</th>
+                                            <th>Status</th>
+                                            <th class="text-end">Approval</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="commissionRecordsTableBody">
+                                        <!-- Dynamic records -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- VIEW 11: DEPARTMENT WORK QUEUES -->
+            <!-- ============================================================== -->
+            <div id="view-queues" class="view-container d-none">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h4 class="fw-bold mb-1">Departmental Work Queues</h4>
+                        <p class="text-secondary small mb-0">Dedicated operational work streams for Sales, Shipping, Finance, MIS, and Admin.</p>
+                    </div>
+                </div>
+
+                <!-- Queue Selector Tabs -->
+                <ul class="nav nav-pills mb-3 border-bottom pb-2">
+                    <li class="nav-item">
+                        <button class="nav-link queue-tab-btn active" data-queue="SALES" onclick="loadQueues('SALES')"><i class="bi bi-funnel"></i> Sales Queue</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link queue-tab-btn" data-queue="SHIPPING" onclick="loadQueues('SHIPPING')"><i class="bi bi-box-seam"></i> Shipping Queue</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link queue-tab-btn" data-queue="FINANCE" onclick="loadQueues('FINANCE')"><i class="bi bi-credit-card"></i> Finance Queue</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link queue-tab-btn" data-queue="MIS" onclick="loadQueues('MIS')"><i class="bi bi-bar-chart"></i> MIS Queue</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link queue-tab-btn" data-queue="ADMIN" onclick="loadQueues('ADMIN')"><i class="bi bi-shield-lock"></i> Admin Queue</button>
+                    </li>
+                </ul>
+
+                <div class="crm-card">
+                    <div class="table-responsive">
+                        <table class="table table-custom">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Assignment Title</th>
+                                    <th>Priority</th>
+                                    <th>Assigned Operator</th>
+                                    <th>Queued At</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Queue Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="queueItemsTableBody">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- VIEW 12: ANALYTICS & REPORTS -->
+            <!-- ============================================================== -->
+            <div id="view-reports" class="view-container d-none">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h4 class="fw-bold mb-1">Business Intelligence &amp; Operational Reports</h4>
+                        <p class="text-secondary small mb-0">Real-time database aggregations, receivables aging buckets, and instant CSV downloads.</p>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-primary" onclick="exportCsvReport('SALES')"><i class="bi bi-download"></i> Export Sales CSV</button>
+                        <button class="btn btn-sm btn-outline-success" onclick="exportCsvReport('INVOICE')"><i class="bi bi-download"></i> Export Receivables CSV</button>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="exportCsvReport('INVENTORY')"><i class="bi bi-download"></i> Export Inventory CSV</button>
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <div class="crm-card h-100">
+                            <div class="crm-card-header">
+                                <h6 class="crm-card-title">Sales Performance by Sales Rep</h6>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-custom">
+                                    <thead>
+                                        <tr>
+                                            <th>Sales Representative</th>
+                                            <th>Orders</th>
+                                            <th>Total Revenue</th>
+                                            <th>Confirmed</th>
+                                            <th>Commission</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="reportSalesRepTableBody">
+                                        <!-- Dynamic rows -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="crm-card h-100">
+                            <div class="crm-card-header">
+                                <h6 class="crm-card-title">Receivables Aging Analysis</h6>
+                            </div>
+                            <div class="p-3">
+                                <div class="d-flex justify-content-between py-2 border-bottom">
+                                    <span>Current (0 - 30 Days):</span>
+                                    <span class="fw-bold text-success" id="aging0to30">$0.00</span>
+                                </div>
+                                <div class="d-flex justify-content-between py-2 border-bottom">
+                                    <span>31 - 60 Days:</span>
+                                    <span class="fw-bold text-primary" id="aging31to60">$0.00</span>
+                                </div>
+                                <div class="d-flex justify-content-between py-2 border-bottom">
+                                    <span>61 - 90 Days:</span>
+                                    <span class="fw-bold text-warning" id="aging61to90">$0.00</span>
+                                </div>
+                                <div class="d-flex justify-content-between py-2 border-bottom">
+                                    <span>Overdue 90+ Days:</span>
+                                    <span class="fw-bold text-danger" id="aging90Plus">$0.00</span>
+                                </div>
+                                <div class="d-flex justify-content-between pt-3">
+                                    <span class="fw-bold fs-6">Total Receivables:</span>
+                                    <span class="fw-bold fs-6 text-dark" id="agingTotal">$0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="crm-card">
+                    <div class="crm-card-header">
+                        <h6 class="crm-card-title">Inventory Valuation by Category</h6>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Products</th>
+                                    <th>Units Available</th>
+                                    <th>Cost Valuation</th>
+                                    <th>Potential Retail Valuation</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reportInventoryTableBody">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- VIEW 13: SYSTEM AUDIT TRAIL -->
+            <!-- ============================================================== -->
+            <div id="view-audit" class="view-container d-none">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h4 class="fw-bold mb-1">System Audit &amp; Security Logs</h4>
+                        <p class="text-secondary small mb-0">Immutable compliance log recording user identity, IP address, and mutation parameters.</p>
+                    </div>
+                    <button class="btn btn-sm btn-outline-secondary" onclick="loadAuditLogs()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+                </div>
+
+                <div class="crm-card">
+                    <div class="table-responsive">
+                        <table class="table table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>Username</th>
+                                    <th>Action</th>
+                                    <th>Entity</th>
+                                    <th>Parameters / Diff</th>
+                                    <th>IP Address</th>
+                                </tr>
+                            </thead>
+                            <tbody id="auditLogsTableBody">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ====================================================================== -->
+    <!-- MODALS & DRAWERS -->
+    <!-- ====================================================================== -->
+
+    <!-- 1. Customer 360 Detail Modal -->
+    <div class="modal fade" id="customerDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h5 class="modal-title mb-0" id="drawerCustName">Customer Profile</h5>
+                        <small class="text-primary fw-bold" id="drawerCustCode">CUST-CODE</small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <small class="text-muted d-block">Company</small>
+                            <span class="fw-semibold text-dark" id="drawerCustCompany">-</span>
+                        </div>
+                        <div class="col-md-6">
+                            <small class="text-muted d-block">Category</small>
+                            <span class="badge bg-light text-dark border" id="drawerCustCategory">-</span>
+                        </div>
+                        <div class="col-md-6">
+                            <small class="text-muted d-block">Email</small>
+                            <span class="text-dark" id="drawerCustEmail">-</span>
+                        </div>
+                        <div class="col-md-6">
+                            <small class="text-muted d-block">Phone</small>
+                            <span class="text-dark" id="drawerCustPhone">-</span>
+                        </div>
+                        <div class="col-12">
+                            <small class="text-muted d-block">Billing Address</small>
+                            <span class="text-dark" id="drawerCustBilling">-</span>
+                        </div>
+                        <div class="col-12">
+                            <small class="text-muted d-block">Relationship Notes</small>
+                            <p class="text-secondary small mb-0 p-2 bg-light rounded" id="drawerCustNotes">-</p>
+                        </div>
+                    </div>
+
+                    <h6 class="fw-bold border-bottom pb-2 mt-4">Key Contacts</h6>
+                    <div id="drawerContactsList"></div>
+
+                    <h6 class="fw-bold border-bottom pb-2 mt-4">Active Deals</h6>
+                    <div id="drawerOppsList"></div>
+
+                    <h6 class="fw-bold border-bottom pb-2 mt-4">Billing Invoices</h6>
+                    <div id="drawerInvoicesList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. New Customer Modal -->
+    <div class="modal fade" id="newCustomerModal" tabindex="-1">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Register New Customer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="newCustomerForm">
+                        <div id="custDuplicateAlert" class="alert alert-warning small d-none mb-3"></div>
+                        <div class="mb-2">
+                            <label class="form-label small fw-semibold">Customer / Contact Name *</label>
+                            <input type="text" class="form-control form-control-sm" id="newCustName" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label small fw-semibold">Company Name</label>
+                            <input type="text" class="form-control form-control-sm" id="newCustCompany">
+                        </div>
+                        <div class="row g-2 mb-2">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-semibold">Email *</label>
+                                <input type="email" class="form-control form-control-sm" id="newCustEmail" onblur="checkCustomerDuplicateRealtime()" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-semibold">Phone Number</label>
+                                <input type="text" class="form-control form-control-sm" id="newCustPhone" onblur="checkCustomerDuplicateRealtime()">
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label small fw-semibold">Category</label>
+                            <select class="form-select form-select-sm" id="newCustCategory">
+                                <option value="STANDARD">Standard</option>
+                                <option value="ENTERPRISE">Enterprise</option>
+                                <option value="VIP">VIP</option>
+                                <option value="SMB">SMB</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label small fw-semibold">Billing Address</label>
+                            <input type="text" class="form-control form-control-sm" id="newCustBilling">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label small fw-semibold">Shipping Address</label>
+                            <input type="text" class="form-control form-control-sm" id="newCustShipping">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label small fw-semibold">Initial Notes</label>
+                            <textarea class="form-control form-control-sm" id="newCustNotes" rows="2"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-primary" onclick="saveNewCustomer()">Register Customer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. New Lead Modal -->
+    <div class="modal fade" id="newLeadModal" tabindex="-1">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Register Sales Lead</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="newLeadForm">
+                        <div class="row g-2 mb-2">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-semibold">First Name *</label>
+                                <input type="text" class="form-control form-control-sm" id="newLeadFirstName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-semibold">Last Name</label>
+                                <input type="text" class="form-control form-control-sm" id="newLeadLastName">
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label small fw-semibold">Company</label>
+                            <input type="text" class="form-control form-control-sm" id="newLeadCompany">
+                        </div>
+                        <div class="row g-2 mb-2">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-semibold">Email *</label>
+                                <input type="email" class="form-control form-control-sm" id="newLeadEmail" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-semibold">Phone</label>
+                                <input type="text" class="form-control form-control-sm" id="newLeadPhone">
+                            </div>
+                        </div>
+                        <div class="row g-2 mb-2">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-semibold">Lead Source</label>
+                                <select class="form-select form-select-sm" id="newLeadSource">
+                                    <option value="WEBSITE">Website</option>
+                                    <option value="EVENT">Event</option>
+                                    <option value="REFERRAL">Referral</option>
+                                    <option value="PARTNER">Partner</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-semibold">Estimated Budget ($)</label>
+                                <input type="number" class="form-control form-control-sm" id="newLeadBudget" value="10000">
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label small fw-semibold">Qualification Notes</label>
+                            <textarea class="form-control form-control-sm" id="newLeadNotes" rows="2"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-primary" onclick="saveNewLead()">Create Lead</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Convert Lead Modal -->
+    <div class="modal fade" id="convertLeadModal" tabindex="-1">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Convert Lead to Deal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="small text-muted">This will execute <code>CRM_SALES_PKG.CONVERT_LEAD</code> to automatically create a Customer record and an active Opportunity.</p>
+                    <input type="hidden" id="convertLeadId">
+                    <div class="mb-2">
+                        <label class="form-label small fw-semibold">Opportunity Name</label>
+                        <input type="text" class="form-control form-control-sm" id="convertDealName">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label small fw-semibold">Initial Deal Value ($)</label>
+                        <input type="number" class="form-control form-control-sm" id="convertDealValue">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-success" onclick="executeLeadConversion()">Convert Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Create Order Modal -->
+    <div class="modal fade" id="newOrderModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create Sales Order</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-8">
+                            <label class="form-label small fw-semibold">Select Customer *</label>
+                            <select class="form-select form-select-sm" id="newOrderCustomer" required></select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small fw-semibold">Internal Notes</label>
+                            <input type="text" class="form-control form-control-sm" id="newOrderNotes" placeholder="Delivery notes...">
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="fw-semibold small">Order Line Items</span>
+                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="addOrderLineItem()"><i class="bi bi-plus-lg"></i> Add Item</button>
+                    </div>
+
+                    <div id="orderLineItemsContainer"></div>
+
+                    <!-- Totals Preview -->
+                    <div class="card p-3 mt-3 bg-light border-0">
+                        <div class="d-flex justify-content-between mb-1">
+                            <small class="text-muted">Subtotal:</small>
+                            <span class="fw-semibold" id="newOrderSubtotal">$0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-1">
+                            <small class="text-muted">GST / Tax (18%):</small>
+                            <span class="fw-semibold" id="newOrderTax">$0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between pt-2 border-top">
+                            <span class="fw-bold">Total Order Value:</span>
+                            <span class="fw-bold text-primary fs-6" id="newOrderTotal">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-primary" onclick="saveNewOrder()">Save Draft Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. Invoice Details & Printable PDF Preview Modal -->
+    <div class="modal fade" id="invoicePrintModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header d-print-none">
+                    <h5 class="modal-title">Tax Invoice Preview</h5>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="window.print()"><i class="bi bi-printer"></i> Print / PDF</button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                </div>
+                <div class="modal-body p-4" id="invoicePrintSection">
+                    <!-- Invoice Header -->
+                    <div class="d-flex justify-content-between align-items-start border-bottom pb-3 mb-4">
+                        <div>
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <div class="brand-icon" style="width: 32px; height: 32px; font-size: 1rem;"><i class="bi bi-clouds-fill"></i></div>
+                                <h5 class="fw-bold mb-0">ENTERPRISE CRM CORP</h5>
+                            </div>
+                            <small class="text-muted d-block">100 Enterprise Way, Suite 500, Tech Park</small>
+                            <small class="text-muted d-block">Tax ID / GSTIN: 27AABCE1234F1Z5</small>
+                        </div>
+                        <div class="text-end">
+                            <h4 class="fw-bold text-primary mb-1" id="modalInvNumber">INV-2026-00001</h4>
+                            <span id="modalInvStatusBadge" class="badge-status badge-paid">PAID</span>
+                            <div class="mt-2 small text-muted">
+                                <div><strong>Date:</strong> <span id="modalInvDate">-</span></div>
+                                <div><strong>Due Date:</strong> <span id="modalInvDueDate">-</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bill To -->
+                    <div class="mb-4">
+                        <small class="text-muted text-uppercase fw-bold">Billed To:</small>
+                        <h6 class="fw-bold mb-1" id="modalInvCustName">-</h6>
+                        <small class="text-secondary d-block" id="modalInvCustBilling">-</small>
+                    </div>
+
+                    <!-- Items Table -->
+                    <table class="table table-sm table-bordered mb-4">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Item Description</th>
+                                <th class="text-center" style="width: 80px;">Qty</th>
+                                <th class="text-end" style="width: 120px;">Unit Price</th>
+                                <th class="text-end" style="width: 90px;">Tax Rate</th>
+                                <th class="text-end" style="width: 130px;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modalInvItemsBody"></tbody>
+                    </table>
+
+                    <!-- Summary -->
+                    <div class="row justify-content-end">
+                        <div class="col-md-5">
+                            <div class="d-flex justify-content-between py-1">
+                                <span class="text-muted">Subtotal:</span>
+                                <span class="fw-semibold" id="modalInvSubtotal">$0.00</span>
+                            </div>
+                            <div class="d-flex justify-content-between py-1">
+                                <span class="text-muted">Tax (18%):</span>
+                                <span class="fw-semibold" id="modalInvTax">$0.00</span>
+                            </div>
+                            <div class="d-flex justify-content-between py-2 border-top border-bottom">
+                                <span class="fw-bold">Total Due:</span>
+                                <span class="fw-bold text-dark fs-6" id="modalInvTotal">$0.00</span>
+                            </div>
+                            <div class="d-flex justify-content-between py-1 text-success">
+                                <span>Paid Amount:</span>
+                                <span class="fw-semibold" id="modalInvPaid">$0.00</span>
+                            </div>
+                            <div class="d-flex justify-content-between py-1 text-danger fw-bold">
+                                <span>Outstanding Balance:</span>
+                                <span id="modalInvBalance">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. Record Payment Modal -->
+    <div class="modal fade" id="recordPaymentModal" tabindex="-1">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Record Invoice Settlement</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="small text-muted mb-3">Recording payment for Invoice <strong id="payInvoiceNumber">-</strong>. Current outstanding balance: <strong class="text-danger" id="payBalanceAmount">$0.00</strong></p>
+                    <input type="hidden" id="payInvoiceId">
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Payment Amount ($) *</label>
+                        <input type="number" step="0.01" class="form-control form-control-sm" id="payAmount" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Payment Method</label>
+                        <select class="form-select form-select-sm" id="payMethod">
+                            <option value="BANK_TRANSFER">Bank Wire / ACH</option>
+                            <option value="CREDIT_CARD">Credit Card / Gateway</option>
+                            <option value="UPI">UPI / Digital Rail</option>
+                            <option value="WIRE">Federal Reserve Wire</option>
+                            <option value="CHECK">Corporate Check</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Idempotency Key (Duplicate Prevention)</label>
+                        <input type="text" class="form-control form-control-sm font-monospace" id="payIdempotencyKey" readonly>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label small fw-semibold">Payment Notes / Bank Reference</label>
+                        <input type="text" class="form-control form-control-sm" id="payNotes" placeholder="JP Morgan wire ref...">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-success" onclick="savePayment()">Submit Payment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8. Receive Stock Modal -->
+    <div class="modal fade" id="receiveStockModal" tabindex="-1">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Stock Inbound</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="small text-muted mb-2">Product: <strong id="receiveStockProdName">-</strong></p>
+                    <input type="hidden" id="receiveStockProdId">
+                    <div class="mb-2">
+                        <label class="form-label small fw-semibold">Quantity to Receive</label>
+                        <input type="number" class="form-control form-control-sm" id="receiveStockQty" value="10" min="1">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label small fw-semibold">Receipt Reason</label>
+                        <input type="text" class="form-control form-control-sm" id="receiveStockReason" value="Purchase Order Replenishment">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-primary" onclick="saveReceiveStock()">Receive Stock</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 9. Adjust Stock Modal -->
+    <div class="modal fade" id="adjustStockModal" tabindex="-1">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Audit Stock Adjustment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="small text-muted mb-2">Product: <strong id="adjustStockProdName">-</strong></p>
+                    <input type="hidden" id="adjustStockProdId">
+                    <div class="mb-2">
+                        <label class="form-label small fw-semibold">New Verified Available Stock</label>
+                        <input type="number" class="form-control form-control-sm" id="adjustStockNewCount" min="0">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label small fw-semibold">Mandatory Audit Reason *</label>
+                        <textarea class="form-control form-control-sm" id="adjustStockReason" rows="2" placeholder="Physical inventory discrepancy verification..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-warning" onclick="saveAdjustStock()">Save Adjustment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 10. New Task Modal -->
+    <div class="modal fade" id="newTaskModal" tabindex="-1">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Schedule Follow-up Task</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="newTaskForm">
+                        <div class="mb-2">
+                            <label class="form-label small fw-semibold">Task Title *</label>
+                            <input type="text" class="form-control form-control-sm" id="newTaskTitle" placeholder="Call client regarding quote..." required>
+                        </div>
+                        <div class="row g-2 mb-2">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-semibold">Priority</label>
+                                <select class="form-select form-select-sm" id="newTaskPriority">
+                                    <option value="MEDIUM">Medium</option>
+                                    <option value="HIGH">High</option>
+                                    <option value="URGENT">Urgent</option>
+                                    <option value="LOW">Low</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-semibold">Due Date *</label>
+                                <input type="datetime-local" class="form-control form-control-sm" id="newTaskDueDate" required>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label small fw-semibold">Description &amp; Action Items</label>
+                            <textarea class="form-control form-control-sm" id="newTaskDescription" rows="2"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-primary" onclick="saveNewTask()">Schedule Task</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 2000;"></div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Master Application JS -->
+    <script src="/js/crm.js"></script>
+</body>
+</html>
